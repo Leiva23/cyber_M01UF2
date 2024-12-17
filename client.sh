@@ -1,19 +1,22 @@
 #!/bin/bash
 
+PORT=7777
+IP_SERVER=localhost
+
 echo "LSTP Client (Lechuga Speaker Transfer Protocol)"
 
 echo "1. SEND HEADER"
 
-echo "LSTP_1" | nc localhost 7777
+echo "LSTP_1" | nc $IP_SERVER $PORT
 
 echo "2.LISTEN OK_HEADER"
 
-DATA=`nc -l 7777`
+DATA=`nc -l $PORT`
 
 echo "6.CHECK OK_HEADER"
 if [ "$DATA" != "OK_HEADER" ]
 then
-	echo "ERROR 1: Header enviado correctamente"
+	echo "ERROR 1: Header enviado incorrectamente"
 
 	exit 1
 fi
@@ -24,10 +27,22 @@ fi
 
 #yes | ffmpeg -i client/lechuga1.wav client/lechuga1.ogg
 
-echo "FILE_NAME client/lechuga1.wav" | nc localhost 7777
+echo "7.SEND FILE_NAME"
 
+echo "FILE_NAME salida.ogg" | nc $IP_SERVER $PORT
 
+echo "8.LISTEN"
 
+DATA=`nc -l $PORT`
 
+if [ "$DATA" != "OK_FILE_NAME" ]
+then
+	echo "ERROR 2: FILE_NAME mal enviado"
+
+	exit 2
+fi
+
+echo "12. SEND FILE DATA"
+cat salida.ogg | nc $IP_SERVER $PORT
 
 

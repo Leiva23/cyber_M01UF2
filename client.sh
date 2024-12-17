@@ -46,3 +46,20 @@ echo "12. SEND FILE DATA"
 cat salida.ogg | nc $IP_SERVER $PORT
 
 
+echo "13.LISTEN OK/KO_FILE_DATA"
+DATA=`nc -l $PORT`
+
+if [ "$DATA" != "OK_FILE_DATA" ]
+then
+	echo "ERROR 3: Error al enviar los datos"
+	exit 3
+fi
+
+echo "Fin"
+exit 0
+
+
+
+
+
+

@@ -52,3 +52,11 @@ echo "OK_FILE_NAME" | nc $IP_CLIENT $PORT
 echo "11. LISTEN FILE DATA"
 
 nc -l $PORT > server/$FILE_NAME
+
+
+echo "14. SEND OK_FILE_DATA"
+echo "OK_FILE_DATA" | nc $IP_CLIENT $PORT
+
+echo "Fin"
+exit 0
+

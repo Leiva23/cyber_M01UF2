@@ -1,7 +1,8 @@
 #!/bin/bash
 
 PORT=7777
-IP_CLIENT=localhost
+IP_SERVER="localhost"
+IP_CLIENT=`ip a | grep -w -i inet | grep -i enp0s3 | awk '{print $2}' | cut -d "/" -f 1`
 
 echo "LSTP Server (Lechuga Speaker Transfer Protocol)"
 
@@ -11,7 +12,9 @@ DATA=`nc -l $PORT`
 
 echo "3.CHECK"
 
-if [ "$DATA" != "LSTP_1" ]
+HEADER=`echo "$DATA" | cut -d " " -f 1`
+
+if [ "$HEADER" != "LSTP_1" ]
 then
 	echo "ERROR 1: Header mal formado $DATA"
 
@@ -19,6 +22,8 @@ then
 
 	exit 1
 fi
+
+IP_CLIENT=`echo "$DATA" | cut -d " " -f 2`
 
 echo "4.SEND OK_HEADER" 
 
@@ -55,7 +60,31 @@ nc -l $PORT > server/$FILE_NAME
 
 
 echo "14. SEND OK_FILE_DATA"
+
+DATA=`cat server/$FILE_NAME | wc -c`
+
+if [ $DATA -eq 0 ]
+then 
+	echo "Error3: Datos mal formados (vacíos)"
+	echo "KO_FILE_DATA" | nc $IP_CLIENT $PORT
+exit 3
+fi
+
 echo "OK_FILE_DATA" | nc $IP_CLIENT $PORT
+
+
+echo "15. LISTEN FILE_MD5"
+
+DATA=`nc -l $PORT`
+
+if if [ $DATA -eq  ]
+then
+      echo "Error 4: Datos mal formados (vacíos)"
+      echo "KO_FILE_DATA" | nc $IP_CLIENT $PORT
+  exit 3
+ fi
+
+
 
 echo "Fin"
 exit 0

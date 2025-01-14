@@ -1,13 +1,21 @@
 #!/bin/bash
 
-PORT=7777
-IP_SERVER=localhost
+if [ $# -ne 1 ]
+then
+	echo "Error: El comando requiere almenos un paramentro"
+	echo "Ejemplo de uso:"
+	echo "$0 127.0.0.1"
 
+	exit 1
+fi
+PORT=7777
+IP_SERVER="$1"
+IP_CLIENT=`ip a | grep -w -i inet | grep -i enp0s3 | awk '{print $2}' | cut -d "/" -f 1`
 echo "LSTP Client (Lechuga Speaker Transfer Protocol)"
 
 echo "1. SEND HEADER"
 
-echo "LSTP_1" | nc $IP_SERVER $PORT
+echo "LSTP_1 $IP_CLIENT" | nc $IP_SERVER $PORT
 
 echo "2.LISTEN OK_HEADER"
 
@@ -54,6 +62,12 @@ then
 	echo "ERROR 3: Error al enviar los datos"
 	exit 3
 fi
+
+echo "16. SEND FILE_DATA_MD5"
+
+MD5=`cat salida.ogg | md5sum | cut -d " " -f 1`
+
+echo "FILE_DATA_MD5 $MD5" | $IP_SERVER $PORT
 
 echo "Fin"
 exit 0

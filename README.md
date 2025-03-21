@@ -35,4 +35,13 @@ Pero tambien...
 3. Tercero
 4. Cuarto
 
-'''Hola'''
+Esto es JavaScript`console.log("hola")`
+
+Y esto es u bloque de codigo
+
+```
+css
+body{
+margin:0;
+}
+```

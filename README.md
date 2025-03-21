@@ -44,6 +44,8 @@ body{
 margin:0;
 }
 ```
+
+## AVISOS Y NOTIFICACIONES
 >[!NOTE]
 >Esto es una nota
 

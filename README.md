@@ -39,8 +39,7 @@ Esto es JavaScript`console.log("hola")`
 
 Y esto es u bloque de codigo
 
-```
-css
+```css
 body{
 margin:0;
 }

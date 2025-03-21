@@ -44,3 +44,17 @@ body{
 margin:0;
 }
 ```
+>[!NOTE]
+>Esto es una nota
+
+>[!TIP]
+>Esto es un resultado
+
+>[!WARNING]
+> Cuidado que algo puede salir mal
+
+>[!IMPORTANT]
+>Ojito no te dejes el **WHERE** en el delete **FROM**
+
+>[!CAUTION]
+>Si te equivocas te vas al peo

@@ -69,6 +69,6 @@ Mira que esto es un enlace: [Esto es un enlace](https://enti.cat)
 
 ## Imagenes
 
-![imagen](https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.m.wikipedia.org%2Fwiki%2FFile%3AOcticons-mark-github.svg&psig=AOvVaw3hZnKl9Mk6vRSl1DSEbNbN&ust=1742649946781000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNCZpYemm4wDFQAAAAAdAAAAABAE)
+![imagen](https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png)
 
 

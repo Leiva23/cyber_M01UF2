@@ -71,4 +71,8 @@ Mira que esto es un enlace: [Esto es un enlace](https://enti.cat)
 
 ![imagen](https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png)
 
+## Lista de Tareas
 
+- [ ] Agua
+- [ ] Pan
+- [x] Pollo 

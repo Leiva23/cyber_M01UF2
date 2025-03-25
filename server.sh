@@ -16,16 +16,14 @@ HEADER=`echo "$DATA" | cut -d " " -f 1`
 
 if [ "$HEADER" != "LSTP_1" ]
 then
-	echo "ERROR 1: Header mal formado $DATA"
-
-	echo "KO_HEADER" | nc localhost $PORT
-
-	exit 1
+    echo "ERROR 1: Header mal formado $DATA"
+    echo "KO_HEADER" | nc localhost $PORT
+    exit 1
 fi
 
 IP_CLIENT=`echo "$DATA" | cut -d " " -f 2`
 
-echo "4.SEND OK_HEADER" 
+echo "4.SEND OK_HEADER"
 
 echo "OK_HEADER" | nc localhost $PORT
 
@@ -39,16 +37,12 @@ PREFIX=`echo $DATA | cut -d " " -f 1`
 
 if [ "$PREFIX" != "FILE_NAME" ]
 then
-	echo "ERROR 2: FILE_NAME incorrecto"
-
-	echo "KO_FILE_NAME" |  $IP_CLIENT $PORT
-
-	exit 2
+    echo "ERROR 2: FILE_NAME incorrecto"
+    echo "KO_FILE_NAME" | nc $IP_CLIENT $PORT
+    exit 2
 fi
 
 FILE_NAME=`echo $DATA | cut -d " " -f 2`
-
-
 
 echo "10. SEND OK_FILE_NAME"
 
@@ -58,34 +52,50 @@ echo "11. LISTEN FILE DATA"
 
 nc -l $PORT > server/$FILE_NAME
 
-
 echo "14. SEND OK_FILE_DATA"
 
 DATA=`cat server/$FILE_NAME | wc -c`
 
 if [ $DATA -eq 0 ]
-then 
-	echo "Error3: Datos mal formados (vacíos)"
-	echo "KO_FILE_DATA" | nc $IP_CLIENT $PORT
-exit 3
+then
+    echo "ERROR 3: Datos mal formados (vacíos)"
+    echo "KO_FILE_DATA" | nc $IP_CLIENT $PORT
+    exit 3
 fi
 
 echo "OK_FILE_DATA" | nc $IP_CLIENT $PORT
 
-
 echo "15. LISTEN FILE_MD5"
 
 DATA=`nc -l $PORT`
+echo $DATA
 
-if if [ $DATA -eq  ]
+echo "18. COMPROBACION PREFIJO MD5 RECIBIDO"
+
+PREFIX_MD5=`echo $DATA | cut -d " " -f 1`
+
+if [ "$PREFIX_MD5" != "FILE_DATA_MD5" ]
 then
-      echo "Error 4: Datos mal formados (vacíos)"
-      echo "KO_FILE_DATA" | nc $IP_CLIENT $PORT
-  exit 3
- fi
+    echo "ERROR 5: Prefijo MD5 incorrecto"
+    echo "KO_FILE_DATA_MD5" | nc $IP_CLIENT $PORT
+    exit 5
+fi
 
+echo "19. COMPROBACIÓN INTEGRIDAD MD5 RECIBIDO"
 
+DESTI_MD5=`cat "server/$FILE_NAME" | md5sum | cut -d " " -f 1`
+HASH_MD5=`echo $DATA | cut -d " " -f 2`
+
+if [ "$HASH_MD5" != "$DESTI_MD5" ]
+then
+    echo "ERROR 6: El MD5 no coincide"
+    echo "KO_FILE_DATA_MD5" | nc $IP_CLIENT $PORT
+    exit 6
+fi
+
+echo "20. SEND OK_FILE_MD5"
+
+echo "OK_FILE_MD5" | nc $IP_CLIENT $PORT
 
 echo "Fin"
 exit 0
-

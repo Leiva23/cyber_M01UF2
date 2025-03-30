@@ -17,7 +17,7 @@ HEADER=`echo "$DATA" | cut -d " " -f 1`
 if [ "$HEADER" != "LSTP_1" ]
 then
     echo "ERROR 1: Header mal formado $DATA"
-    echo "KO_HEADER" | nc localhost $PORT
+    echo "KO_HEADER" | nc $IP_CLIENT $PORT
     exit 1
 fi
 
@@ -25,7 +25,7 @@ IP_CLIENT=`echo "$DATA" | cut -d " " -f 2`
 
 echo "4.SEND OK_HEADER"
 
-echo "OK_HEADER" | nc localhost $PORT
+echo "OK_HEADER" | nc $IP_CLIENT $PORT
 
 echo "5.LISTEN FILE_NAME"
 

@@ -1,8 +1,6 @@
 #!/bin/bash
 
 PORT=7777
-IP_SERVER="localhost"
-IP_CLIENT=`ip a | grep -w -i inet | grep -i enp0s3 | awk '{print $2}' | cut -d "/" -f 1`
 
 echo "LSTP Server (Lechuga Speaker Transfer Protocol)"
 
